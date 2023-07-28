@@ -1,18 +1,27 @@
 import React, { useState, MouseEvent, Fragment } from 'react';
 import './SpinButton.css';
 
+const MAX_CAPACITY = 3;
+
 const SpinButton: React.FC = () => {
   const [count, setCount] = useState<number>(0);
   const [isTooltipVisible, setIsTooltipVisible] = useState<boolean>(false);
   const [voiceOverMessage, setVoiceOverMessage] = useState('');
 
   const increment = () => {
-    if (count === 3) return;
+    if (count === MAX_CAPACITY) {
+      setVoiceOverMessage(`최대 인원수는 ${MAX_CAPACITY}명까지 가능합니다`);
+      return;
+    }
     setCount((prevCount) => prevCount + 1);
     setVoiceOverMessage(`성인 승객 추가 ${count + 1}`);
   };
 
   const decrement = () => {
+    if (count === 0) {
+      setVoiceOverMessage(`현재 인원수는 0명입니다`);
+      return;
+    }
     setCount((prevCount) => prevCount - 1);
     setVoiceOverMessage(`성인 승객 감소 ${count - 1}`);
   };
@@ -31,7 +40,7 @@ const SpinButton: React.FC = () => {
             ?
             {isTooltipVisible && (
               <span className="tooltip" role="tooltip" tabIndex={0}>
-                최대 인원수는 3명까지 가능합니다
+                {`최대 인원수는 ${MAX_CAPACITY}명까지 가능합니다`}
               </span>
             )}
           </div>
