@@ -65,7 +65,9 @@ const SpinButton = ({ passenger }: Props) => {
           +
         </button>
       </div>
-      <div aria-live="assertive">{voiceOverMessage}</div>
+      <div className="a11y" aria-live="assertive">
+        {voiceOverMessage}
+      </div>
     </section>
   );
 };

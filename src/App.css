@@ -7,3 +7,8 @@
   height: 100vh;
   gap: 28px;
 }
+
+.a11y {
+  position: fixed;
+  transform: translateX(-10000px);
+}
