@@ -6,6 +6,7 @@ const SpinButton: React.FC = () => {
   const [isTooltipVisible, setIsTooltipVisible] = useState<boolean>(false);
 
   const increment = () => {
+    if (count === 3) return;
     setCount((prevCount) => prevCount + 1);
   };
 
