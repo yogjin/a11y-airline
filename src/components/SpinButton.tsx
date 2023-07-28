@@ -31,7 +31,7 @@ const SpinButton = ({ passenger }: Props) => {
     setVoiceOverMessage(`${passenger} 승객 감소 ${count - 1}`);
   };
 
-  const toggleTooltip = (event: MouseEvent<HTMLDivElement>) => {
+  const toggleTooltip = () => {
     setIsTooltipVisible(!isTooltipVisible);
   };
 
@@ -40,12 +40,18 @@ const SpinButton = ({ passenger }: Props) => {
       <div>
         <div className="spinButtonLabel">
           <label>{passenger}</label>
-          <div className="helpIcon" onMouseEnter={toggleTooltip} onMouseLeave={toggleTooltip}>
+          <div
+            role="tooltip"
+            className="helpIcon"
+            tabIndex={0}
+            onMouseEnter={toggleTooltip}
+            onMouseLeave={toggleTooltip}
+            onFocus={toggleTooltip}
+            onBlur={toggleTooltip}
+          >
             ?
             {isTooltipVisible && (
-              <span className="tooltip" role="tooltip">
-                {`최대 인원수는 ${MAX_CAPACITY}명까지 가능합니다`}
-              </span>
+              <span className="tooltip">{`최대 인원수는 ${MAX_CAPACITY}명까지 가능합니다`}</span>
             )}
           </div>
         </div>
