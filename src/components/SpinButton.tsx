@@ -1,9 +1,14 @@
-import React, { useState, MouseEvent, Fragment } from 'react';
+import React, { useState, MouseEvent } from 'react';
 import './SpinButton.css';
+import { Passenger } from '../App';
 
 const MAX_CAPACITY = 3;
 
-const SpinButton: React.FC = () => {
+type Props = {
+  passenger: Passenger;
+};
+
+const SpinButton = ({ passenger }: Props) => {
   const [count, setCount] = useState<number>(0);
   const [isTooltipVisible, setIsTooltipVisible] = useState<boolean>(false);
   const [voiceOverMessage, setVoiceOverMessage] = useState('');
@@ -14,7 +19,7 @@ const SpinButton: React.FC = () => {
       return;
     }
     setCount((prevCount) => prevCount + 1);
-    setVoiceOverMessage(`성인 승객 추가 ${count + 1}`);
+    setVoiceOverMessage(`${passenger} 승객 추가 ${count + 1}`);
   };
 
   const decrement = () => {
@@ -23,7 +28,7 @@ const SpinButton: React.FC = () => {
       return;
     }
     setCount((prevCount) => prevCount - 1);
-    setVoiceOverMessage(`성인 승객 감소 ${count - 1}`);
+    setVoiceOverMessage(`${passenger} 승객 감소 ${count - 1}`);
   };
 
   const toggleTooltip = (event: MouseEvent<HTMLDivElement>) => {
@@ -33,13 +38,12 @@ const SpinButton: React.FC = () => {
   return (
     <section className="spinButtonContainer">
       <div>
-        <h1>승객 선택</h1>
         <div className="spinButtonLabel">
-          <label>성인</label>
+          <label>{passenger}</label>
           <div className="helpIcon" onMouseEnter={toggleTooltip} onMouseLeave={toggleTooltip}>
             ?
             {isTooltipVisible && (
-              <span className="tooltip" role="tooltip" tabIndex={0}>
+              <span className="tooltip" role="tooltip">
                 {`최대 인원수는 ${MAX_CAPACITY}명까지 가능합니다`}
               </span>
             )}
@@ -48,7 +52,7 @@ const SpinButton: React.FC = () => {
         <button
           onClick={decrement}
           className="spinButton"
-          aria-label="성인 탑승자 한명 줄이기 버튼"
+          aria-label={`${passenger} 탑승자 한명 줄이기 버튼`}
         >
           -
         </button>
@@ -56,7 +60,7 @@ const SpinButton: React.FC = () => {
         <button
           onClick={increment}
           className="spinButton"
-          aria-label="성인 탑승자 한명 늘리기 버튼"
+          aria-label={`${passenger} 탑승자 한명 늘리기 버튼`}
         >
           +
         </button>
