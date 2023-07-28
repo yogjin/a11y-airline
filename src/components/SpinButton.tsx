@@ -1,17 +1,20 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { useState, MouseEvent, Fragment } from 'react';
 import './SpinButton.css';
 
 const SpinButton: React.FC = () => {
   const [count, setCount] = useState<number>(0);
   const [isTooltipVisible, setIsTooltipVisible] = useState<boolean>(false);
+  const [voiceOverMessage, setVoiceOverMessage] = useState('');
 
   const increment = () => {
     if (count === 3) return;
     setCount((prevCount) => prevCount + 1);
+    setVoiceOverMessage(`성인 승객 추가 ${count + 1}`);
   };
 
   const decrement = () => {
     setCount((prevCount) => prevCount - 1);
+    setVoiceOverMessage(`성인 승객 감소 ${count - 1}`);
   };
 
   const toggleTooltip = (event: MouseEvent<HTMLDivElement>) => {
@@ -27,7 +30,7 @@ const SpinButton: React.FC = () => {
           <div className="helpIcon" onMouseEnter={toggleTooltip} onMouseLeave={toggleTooltip}>
             ?
             {isTooltipVisible && (
-              <span className="tooltip" role="tooltip">
+              <span className="tooltip" role="tooltip" tabIndex={0}>
                 최대 인원수는 3명까지 가능합니다
               </span>
             )}
@@ -40,13 +43,7 @@ const SpinButton: React.FC = () => {
         >
           -
         </button>
-        <input
-          type="text"
-          readOnly
-          className="spinButtonInput"
-          aria-label={`성인 ${count} 숫자만 수정`}
-          value={count}
-        />
+        <input type="text" readOnly className="spinButtonInput" value={count} />
         <button
           onClick={increment}
           className="spinButton"
@@ -54,6 +51,9 @@ const SpinButton: React.FC = () => {
         >
           +
         </button>
+      </div>
+      <div aria-atomic="true" aria-live="polite">
+        {voiceOverMessage}
       </div>
     </section>
   );
