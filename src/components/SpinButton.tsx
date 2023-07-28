@@ -61,9 +61,7 @@ const SpinButton: React.FC = () => {
           +
         </button>
       </div>
-      <div aria-atomic="true" aria-live="polite">
-        {voiceOverMessage}
-      </div>
+      <div aria-live="assertive">{voiceOverMessage}</div>
     </section>
   );
 };
